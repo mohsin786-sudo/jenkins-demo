@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Pull code from GitHub
+                git branch: 'main', url: 'https://github.com/<user>/<repo>.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Building the project..."
+                // Example: for Node.js -> sh 'npm install'
+                // Example: for Python -> sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo "Running tests..."
+                // Example: for Node.js -> sh 'npm test'
+                // Example: for Python -> sh 'pytest'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "Deploying application..."
+                // Example: Docker build, k8s deploy, or copy artifacts
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Cleaning up..."
+        }
+        success {
+            echo "✅ Build completed successfully!"
+        }
+        failure {
+            echo "❌ Build failed!"
+        }
+    }
+}
